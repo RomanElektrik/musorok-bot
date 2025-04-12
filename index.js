@@ -27,8 +27,17 @@ server.listen(PORT, () => {
 
 // Подключение к MongoDB
 console.log('Подключение к MongoDB...');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/musorOK';
-mongoose.connect(MONGODB_URI)
+
+mongoose.connect(MONGODB_URI, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true
+  },
+  dbName: 'musorOK'
+})
   .then(() => {
     console.log('MongoDB подключена успешно');
     startBots();
